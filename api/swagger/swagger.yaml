@@ -1,0 +1,77 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Payments Service APIs
+  description: API for Payments Backend Service
+# during dev, should point to your local machine
+# basePath prefixes all resource paths 
+basePath: /payments-service
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+tags:
+- name: Payments
+  description: All Payments Endpoints
+paths:
+  #--------------------------------------------------------Payments----------------------------------------------#
+  /payments:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: index
+    post:
+      tags:
+        - Payments
+      description: Register Payments
+      # used as the method name of the controller
+      operationId: createCustomer
+      parameters: 
+        - $ref: '#/parameters/Authorization'
+        - name: data
+          in: body
+          description: dynamic content of mail
+          required: true
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+      responses:
+        "200":
+          description: Success
+        # responses may fall through to errors
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /swagger:
+    x-swagger-pipe: swagger_raw
+    
+# complex objects have schema definitions
+
+  #----------------------------------------- Parameters ----------------------------------------------#
+
+parameters: 
+  Authorization:
+    in: header
+    name: Authorization
+    type: string
+    required: true
+
+  #--------------------------------------- Defintions -------------------------------------#
+
+definitions:
+
+  #--------------------------------------------------Payments --------------------------------------#
+  SuccessResponse:
+    type: object
+    
+  ErrorResponse:
+    type: object

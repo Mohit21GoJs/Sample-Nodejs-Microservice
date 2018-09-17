@@ -1,0 +1,53 @@
+url:
+    path:
+        accountsPayableService: http://13.127.202.129:3008/accounts-payable-service
+        inventoryService: http://13.127.202.129:3003/inventory-management-service
+        mediaService: https://deverp.allonblock.com/media-service
+        notificationService: http://13.127.202.129:3006/notification-service
+        orderManagementService: http://13.127.202.129:3003/order-management-service
+        referenceDataService: http://13.127.202.129:3004/reference-data-service
+        subInventoryService: http://localhost:3011/sub-inventory-service
+        supplierService: http://13.127.202.129:3002/supplier-registration-service
+        blockchainSdk: http://13.127.202.129:3007
+        organizationService: http://localhost:3010/organization-service
+        metricWrapperService: http://13.127.202.129:3015/metrc-service    
+        metrcService: https://sandbox-api-ca.metrc.com
+        securityService: http://13.127.202.129:3013/iam
+        plantService : http://13.127.202.129:3012/plant-service
+        posService: http://13.126.252.40:3000/api
+        taskGoServer: 13.127.202.129:5001
+        taskServiceHttpClient: http://13.127.202.129:3030/task-service
+        historyService: http://13.127.202.129:5002
+        zipCodeService: http://13.127.202.129:5003/zipCode
+        subInventoryLocationService: http://13.127.202.129:5010/
+
+http:
+    requestTimeOutInMs: 20000
+
+storage:
+    url: https://s3.ap-south-1.amazonaws.com/
+    bucketName: aob-deverp
+
+dbConfigs:
+  protocol: mongodb
+  host: 13.127.202.129
+  port: 26390
+
+security:
+  publicKey: "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDAXLvSlA2SY79xGzNohCoaqajv\nlvmAg7wQwqxjWX+hgqD4CbZlxvCHFVdb3KdMBQ1gLlQKEXBbHO7PzVxdS6kATYLf\nZLobJttJSsm/YMAjPy5F6iOlonpk3bG+M6YHGC/meFrqL1YOeoleMy9piEU2TRco\nyIOldR0J9m5fBvDGHQIDAQAB\n-----END PUBLIC KEY-----"
+
+token:
+  tokenExpirationTime: '24h'
+
+messageBroker:
+    connectionTimeout: 10000
+    host: localhost
+    port: 5672
+    login: 'guest'
+    password: 'guest'
+    
+date:
+  format : "MMMM Do YYYY"
+  timeZone: "Asia/Kolkata"
+
+passOnRequestHeaders: "Authorization,CorrelationId,Content-Type"

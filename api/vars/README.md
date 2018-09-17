@@ -1,0 +1,1 @@
+Place app level variables which can be shared across multiple modules.

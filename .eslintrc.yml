@@ -1,0 +1,10 @@
+extends: airbnb-base
+rules:
+  indent: off
+  class-methods-use-this: off
+  max-len: off
+  no-multi-spaces: off
+  eqeqeq: off
+  no-console: off
+  
+
