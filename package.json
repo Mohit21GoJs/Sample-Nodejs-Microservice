@@ -69,8 +69,8 @@
     "supertest": "^1.0.0"
   },
   "scripts": {
-    "start-local": "gulp start-nodemon",
-    "start-local-debug": "gulp start-nodemon-debug",
+    "start-local": "sh swagger-version-update.sh && gulp start-nodemon",
+    "start-local-debug": "sh swagger-version-update.sh && gulp start-nodemon-debug",
     "start": "node app.js",
     "build": "babel . -d dist -D --ignore node_modules,dist,test,gulpfile.js,.babelrc,*.md",
     "test": "swagger project test",

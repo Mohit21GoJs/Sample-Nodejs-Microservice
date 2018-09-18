@@ -6,6 +6,8 @@ npm version patch
 
 VERSION=$(node -p -e "require('./package.json').version")
 
+sh swagger-version-update.sh
+
 git push git@bitbucket.org:allOnBlock/aob-payments-service.git HEAD:develop
 
 export APPNAME=aob-payments-service

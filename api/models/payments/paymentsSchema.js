@@ -1,83 +1,30 @@
-// import mongoose from 'mongoose';
-// import businessCustomerBankdetails from '../businessCustomers/bankDetailSchema';
-// import siteInfoDetails from './siteInfoSchema';
+import { Schema, model } from 'mongoose';
 
-// const businessCustomerSchema = mongoose.Schema({
-//     companyId: { type: mongoose.Schema.ObjectId, ref: 'companies' },
-//     businessCustomerStatus: { type: Number, default: 0 },
-//     createdDate: { type: Date, default: Date.now },
-//     lastModifiedDate: { type: Date, default: Date.now },
-//     basicInfo: {
-//         displayId: String,
-//         firstName: String,
-//         middleName: { type: String, default: '' },
-//         lastName: String,
-//         email: String,
-//         designation: String,
-//         companyName: String,
-//         createdDate: Date,
-//         lastModifiedDate: Date,
-//     },
-//     bankingDetailInfo: {
-//         accountNumber: String,
-//         creditLimit: String,
-//         nameOnCheque: String,
-//         invoiceCurrencyCode: String,
-//         currencyCode: String,
-//         preferredPaymentMethods: String,
-//         paymentTerms: String,
-//         voidCheckUrl: String,
-//         bankDetails: { type: [businessCustomerBankdetails.schema], default: undefined },
-//         lastModifiedDate: Date,
-//     },
-//     siteInfo: { type: [siteInfoDetails.schema], default: undefined },
-//     companyInfo: {
-//         licenseType: String,
-//         licenseNumber: String,
-//         category: String,
-//         contactNumbers: {
-//             type: [{
-//                 contact: String,
-//                 contactType: String,
-//             }],
-//             default: undefined,
-//         },
-//         emailAddresses: {
-//             type: [{
-//                 email: String,
-//                 emailType: String,
-//             }],
-//             default: undefined,
-//         },
-//         companyAddressInfo: {
-//             companyAddress: String,
-//             city: String,
-//             country: String,
-//             state: String,
-//             zipCode: String,
-//         },
-//         organizationInfo: {
-//             name: String,
-//             address: String,
-//             city: String,
-//             country: String,
-//             state: String,
-//             zipCode: String,
-//         },
-//         lastModifiedDate: Date,
-//     },
-// });
+const paymentSchema = new Schema({
+    vendorSuccessData: Schema.Types.Mixed,
+    vendorErrorData: Schema.Types.Mixed,
+    paymentType: Schema.Types.String,
+    paymentProvider: Schema.Types.String,
+    status: Schema.Types.String,
+    paymentInfo: {
+        mode: Schema.Types.String,
+        amount: Schema.Types.Number,
+        currency: Schema.Types.String
+    },
+    transactionId: Schema.Types.String,
+    modifiedAt: { type: Date, default: Date.now },
+    createdAt: { type: Date },
+});
 
-// const BusinessCustomerDataStorage = mongoose.model('BusinessCustomers', businessCustomerSchema, 'BusinessCustomers');
+const payment = model('Payment', paymentSchema, 'payments');
 
-// const findBusinessCustomer = ({ qryFields }) => BusinessCustomerDataStorage.find(qryFields).sort({ lastModifiedDate: -1 });
+const createPayment = data => data;
 
-// const updateBusinessCustomer = ({ qryFields, setFields }) => BusinessCustomerDataStorage.findOneAndUpdate(qryFields, setFields, { new: true });
+// create state machine for changing payment status
 
-// const createBusinessCustomer = ({ data }) => BusinessCustomerDataStorage.create(data);
 
-// export {
-//     findBusinessCustomer,
-//     createBusinessCustomer,
-//     updateBusinessCustomer,
-// };
+export const exportedObj = {
+    createPayment
+};
+
+export default exportedObj;
