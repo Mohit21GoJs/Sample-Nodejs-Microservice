@@ -11,6 +11,8 @@ export async function createNewPayment({ data, vendor }) {
             vendor,
             createdOn: Date.now(),
             transactionId: uniqId(),
+            receivedBy: get(data, 'paymentReceiver'),
+            payer: get(data, 'payer'),
         };
         return await createPayment(paymentData);
     } catch (err) {
@@ -28,7 +30,6 @@ export async function updatedFailedPayment({ data, paymentId }) {
                 errors: get(data, 'errors'),
             },
             paymentStatus: 'FAILED',
-
         };
         return await updatePayment(paymentQuery, paymentUpdateData);  
     } catch (err) {
