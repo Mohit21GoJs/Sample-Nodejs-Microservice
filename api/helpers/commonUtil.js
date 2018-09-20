@@ -1,6 +1,7 @@
 import fs from 'fs';
 import mongoose from 'mongoose';
 import * as jwt from 'jsonwebtoken';
+import { Map } from 'immutable';
 import { assign as _assign, find as _find, map as _map, last as _last, get as _get, flow as _flow } from 'lodash';
 import cleanDeep from 'clean-deep';
 import path from 'path';
@@ -8,6 +9,7 @@ import util from 'util';
 import joinUrl from 'url-join';
 import { basePathForTemplates } from '../vars/appSettings';
 import CONSTANTS from '../vars/constants';
+
 
 // Convert fs.readFile into Promise version of same
 const promisifiedReadFile = util.promisify(fs.readFile);
@@ -90,7 +92,27 @@ const makeCustomHeadersComingFromOtherService = ({ authData }) => {
     return tokenData;
 };
 
+/*
+A memoized function for concatenating the urls to avoid the concatenation during every request
+*/
+const memoizedUrlGenerator = (dirName) => {
+    let cache = Map({
+        [dirName]: Map(),
+    });
+    return (serviceName, relativeUrl) => {
+        // Composite key per module
+        const key = [dirName, relativeUrl];
+        if (cache.hasIn(key)) {
+            return cache.getIn(key);
+        }
+        const value = makeUrl(serviceName, [relativeUrl]);
+        cache = cache.setIn(key, value);
+        return value;
+    };
+};
+
 export {
+    memoizedUrlGenerator,
     promisifiedReadFile,
     makeUrl,
     mapFilePath,

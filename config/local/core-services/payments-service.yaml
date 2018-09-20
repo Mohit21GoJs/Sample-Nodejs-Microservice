@@ -1,2 +1,3 @@
 dbConfigs: 
     dbName: 'supplier_production'
+authorizeNetProvider: 'Authorize.net'

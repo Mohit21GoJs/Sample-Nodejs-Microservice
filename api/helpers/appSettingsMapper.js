@@ -17,7 +17,8 @@ const mapper = {
   'http.requestTimeOutInMs': 'requestTimeOutInMs',
   'routes.exemptedRoutes': 'exemptedRoutes',
   'security.publicKey': 'publicKey',
-  'url.path.securityService': 'securityService',
+  'url.path.referenceDataService': 'referenceDataService',
+  'envs.authorizenetEnv': 'authorizeNetEnv',
   'messageBroker.connectionTimeout': 'connectionTimeout',
   'messageBroker.host': 'messageHost',
   'messageBroker.port': 'messagePort',
@@ -26,6 +27,7 @@ const mapper = {
   eventSubscriberList: 'eventSubscriberList',
   eventPublisherList: 'eventPublisherList',
   roles: 'roles',
+  authorizeNetProvider: 'authorizeNetProvider',
 };
 
 // map the app name and version from package.json

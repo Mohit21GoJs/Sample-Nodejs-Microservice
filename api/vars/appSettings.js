@@ -27,9 +27,16 @@ const messagePort = undefined;
 const messageLogin = undefined;
 const messagePassword = undefined;
 const connectionTimeout = undefined;
-
+const authorizeNetEnv = undefined;
+const referenceDataService = undefined;
+const authorizeNetProvider = undefined;
+const isAuthorizeActiveFlagText = 'Active'; // Move to configs
 
 export {
+  authorizeNetEnv,
+  referenceDataService,
+  authorizeNetProvider,
+  isAuthorizeActiveFlagText,
   transporterUserName,
   transporterServiceName,
   transporterPassword,

@@ -1,30 +1,49 @@
-import { Schema, model } from 'mongoose';
+import mongoose, {
+    Schema
+} from 'mongoose';
 
 const paymentSchema = new Schema({
-    vendorSuccessData: Schema.Types.Mixed,
-    vendorErrorData: Schema.Types.Mixed,
-    paymentType: Schema.Types.String,
-    paymentProvider: Schema.Types.String,
-    status: Schema.Types.String,
-    paymentInfo: {
-        mode: Schema.Types.String,
-        amount: Schema.Types.Number,
-        currency: Schema.Types.String
+    vendorResponse: {
+        errors: Schema.Types.Mixed,
+        success: Schema.Types.Mixed,
     },
+    paymentTerms: Schema.Types.String,
+    vendor: Schema.Types.String,
+    paymentMethod: Schema.Types.String,
+    paymentStatus: Schema.Types.String,
+    amountPaid: Schema.Types.Number,
+    currency: Schema.Types.String,
     transactionId: Schema.Types.String,
-    modifiedAt: { type: Date, default: Date.now },
-    createdAt: { type: Date },
+    paymentTimeStamp: {
+        type: Date
+    },
+    modifiedOn: {
+        type: Date,
+        default: Date.now
+    },
+    createdOn: {
+        type: Date
+    },
+    receivedBy: {
+        id: String,
+        name: String,
+    },
+    payer: {
+        id: String,
+        name: String,
+    },
+    cardInfo: {
+        cardNumber: String,
+        expiry: String,
+    },
 });
+const Payment = mongoose.model('Payment', paymentSchema, 'Payments');
 
-const payment = model('Payment', paymentSchema, 'payments');
+export const createPayment = data => Payment.create(data);
 
-const createPayment = data => data;
+export const updatePayment = (query, data) => Payment.updateOne(query, data);
 
-// create state machine for changing payment status
-
-
-export const exportedObj = {
-    createPayment
+export default {
+    createPayment,
+    updatePayment,
 };
-
-export default exportedObj;

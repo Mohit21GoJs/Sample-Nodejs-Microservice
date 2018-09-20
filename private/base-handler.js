@@ -16,4 +16,21 @@ async function baseHandler(wrapperFunc, options) {
     return data;
 }
 
+
+export const baseHandlerWithOptions = wrapperFunc => async (options) => {
+    let data;
+    try {
+        data = await wrapperFunc(options);
+    } catch (err) {
+        logError({
+            code: MESSAGE_CODES.appResponseErrorCode,
+            message: 'Error in handler',
+            error: err,
+        });
+        throw err;
+    }
+    return data;
+};
+
+
 export default baseHandler;

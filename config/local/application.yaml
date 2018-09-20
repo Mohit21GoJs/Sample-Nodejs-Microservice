@@ -20,7 +20,10 @@ url:
         historyService: http://13.127.202.129:5002
         zipCodeService: http://13.127.202.129:5003/zipCode
         subInventoryLocationService: http://13.127.202.129:5010/
-
+        
+envs:
+  authorizenetEnv: 'sandbox'
+  
 http:
     requestTimeOutInMs: 20000
 

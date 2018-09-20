@@ -15,7 +15,7 @@ swagger:
       name: swagger_router
       mockMode: false
       mockControllersDirs: [ api/mocks ]
-      controllersDirs: [ api/controllers, api/controllers/payments]
+      controllersDirs: [ api/controllers, api/controllers/payments, api/controllers/authorizenet]
 
     # pipe for all swagger-node controllers
     swagger_controllers:
