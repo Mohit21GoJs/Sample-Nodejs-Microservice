@@ -13,6 +13,8 @@ export async function createNewPayment({ data, vendor }) {
             transactionId: uniqId(),
             receivedBy: get(data, 'paymentReceiver'),
             payer: get(data, 'payer'),
+            amountPaid: get(data, 'amount'),
+            currency: get(data, 'currency'),
         };
         return await createPayment(paymentData);
     } catch (err) {
