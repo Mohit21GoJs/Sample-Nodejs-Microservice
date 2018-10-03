@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: 0.0.4
+  version: 0.0.5
   title: Payments Service APIs
   description: API for Payments Backend Service
 # during dev, should point to your local machine
@@ -77,6 +77,35 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /payments/search:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: index
+    post:
+      tags:
+        - Payments
+      description: Get Payments from transactionId
+      # used as the method name of the controller
+      operationId: getPayments
+      parameters: 
+        - name: data
+          in: body
+          description: request body for get Payments
+          required: true
+          schema:
+            $ref: '#/definitions/GetPaymentRequest'
+      responses:
+        "200":
+          description: Success
+        # responses may fall through to errors
+          schema:
+            type : array
+            # a pointer to a definition
+            $ref: "#/definitions/PaymentResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  
 
   /swagger:
     x-swagger-pipe: swagger_raw
@@ -179,6 +208,66 @@ definitions:
               bin: 
                 type: "string"
                 example: "411111"
+  PaymentResponse: 
+    properties: 
+      _id: 
+        type: "string"
+        example: "5bb467fac1eb164d3dafb973"
+      receivedBy: 
+        properties: 
+          id: 
+            type: "string"
+            example: "test"
+          name: 
+            type: "string"
+            example: "test_name"
+      payer: 
+        properties: 
+          id: 
+            type: "string"
+            example: "payer"
+          name: 
+            type: "string"
+            example: "payer name"
+      paymentTerms: 
+        type: "string"
+        example: "NET45"
+      paymentMethod: 
+        type: "string"
+        example: "CASH"
+      paymentStatus: 
+        type: "string"
+        example: "FAILED"
+      vendor: 
+        type: "string"
+        example: "Authorize.net"
+      createdOn: 
+        type: "string"
+        example: "2018-10-03T06:55:54.169+0000"
+      transactionId: 
+        type: "string"
+        example: "50sdif99jmssss3d"
+      amountPaid: 
+        type: "number"
+        example: 1
+      currency: 
+        type: "string"
+        example: "USD"
+      modifiedOn: 
+        type: "string"
+        example: "2018-10-03T06:55:54.170+0000"
+      vendorResponse: 
+        type: object
+  GetPaymentRequest: 
+    properties: 
+      transactionIds: 
+        type: "array"
+        items: 
+          type: "string"
+        example: 
+          - "2sc99hchi2jmakvayr"
+
+
 
   SuccessResponse:
     type: object

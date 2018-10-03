@@ -4,4 +4,4 @@ dbConfigs:
 authorizeNetProvider: 'Authorize.net'
 
 routes:
-    exemptedRoutes: ['/payments/stemcells/authorizenet']
+    exemptedRoutes: ['/payments/stemcells/authorizenet', '/payments/search']

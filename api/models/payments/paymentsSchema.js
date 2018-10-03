@@ -39,9 +39,12 @@ const Payment = mongoose.model('Payment', paymentSchema, 'Payments');
 
 export const createPayment = data => Payment.create(data);
 
+export const getPayment = data => Payment.find(data);
+
 export const updatePayment = (query, data) => Payment.updateOne(query, data);
 
 export default {
     createPayment,
     updatePayment,
+    getPayment,
 };
