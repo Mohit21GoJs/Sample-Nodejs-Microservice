@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: 0.0.2
+  version: 0.0.4
   title: Payments Service APIs
   description: API for Payments Backend Service
 # during dev, should point to your local machine
@@ -33,6 +33,33 @@ paths:
       operationId: makePaymentFromAcceptMethod
       parameters: 
         - $ref: '#/parameters/Authorization'
+        - name: data
+          in: body
+          description: request body for accept method
+          required: true
+          schema:
+            $ref: '#/definitions/AcceptMethodRequestBody'
+      responses:
+        "200":
+          description: Success
+        # responses may fall through to errors
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /payments/stemcells/authorizenet:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: authorizeNetController
+    post:
+      tags:
+        - Payments
+      description: Make payments from authorize.net provider
+      # used as the method name of the controller
+      operationId: makePaymentFromAcceptMethodWithoutCompanyId
+      parameters: 
         - name: data
           in: body
           description: request body for accept method

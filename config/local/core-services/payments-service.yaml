@@ -1,3 +1,7 @@
 dbConfigs: 
     dbName: 'supplier_production'
+
 authorizeNetProvider: 'Authorize.net'
+
+routes:
+    exemptedRoutes: ['/payments/stemcells/authorizenet']

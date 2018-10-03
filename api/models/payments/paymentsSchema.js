@@ -1,6 +1,4 @@
-import mongoose, {
-    Schema
-} from 'mongoose';
+import mongoose, { Schema  } from 'mongoose';
 
 const paymentSchema = new Schema({
     vendorResponse: {
@@ -15,14 +13,14 @@ const paymentSchema = new Schema({
     currency: Schema.Types.String,
     transactionId: Schema.Types.String,
     paymentTimeStamp: {
-        type: Date
+        type: Date,
     },
     modifiedOn: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     },
     createdOn: {
-        type: Date
+        type: Date,
     },
     receivedBy: {
         id: String,

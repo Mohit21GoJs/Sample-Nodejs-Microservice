@@ -3,12 +3,8 @@ import {
     APIControllers,
     Constants,
 } from 'authorizenet';
-import {
-    get,
-} from 'lodash';
-import {
-    authorizeNetEnv,
-} from '../../vars/appSettings';
+import { get } from 'lodash';
+import { authorizeNetEnv } from '../../vars/appSettings';
 
 const makeMerchantAuthenticationType = ({
     apiLoginKey,
@@ -87,12 +83,12 @@ export const createTransactionWithAccept = ({
     const paymentRefId = get(paymentInfo, 'transactionId');
     const captureTxRequest = createTxReq(merchantAuthenticationType, captureTx, paymentRefId);
     const captureTxCtrl = makeTxReqCtrl(captureTxRequest);
-    debugger;
+
     return new Promise((resolve) => {
         captureTxCtrl.execute(() => {
             const apiResponse = captureTxCtrl.getResponse();
             const response = new APIContracts.CreateTransactionResponse(apiResponse);
-            debugger;
+
             // LOG response
             if (response != null) {
                 if (response.getMessages().getResultCode() == APIContracts.MessageTypeEnum.OK) {
@@ -105,7 +101,7 @@ export const createTransactionWithAccept = ({
                     } else {
                         console.log('Failed Transaction.');
                         if (response.getTransactionResponse().getErrors() != null) {
-                            resolve({ errors: response.getTransactionResponse().getErrors()});
+                            resolve({ errors: response.getTransactionResponse().getErrors() });
                             // console.log('Error Code: ' + response.getTransactionResponse().getErrors().getError()[0].getErrorCode());
                             // console.log('Error message: ' + response.getTransactionResponse().getErrors().getError()[0].getErrorText());
                         }
@@ -113,7 +109,7 @@ export const createTransactionWithAccept = ({
                 } else {
                     console.log('Failed Transaction. ');
                     if (response.getTransactionResponse() != null && response.getTransactionResponse().getErrors() != null) {
-                        resolve({ errors: response.getTransactionResponse().getErrors()});
+                        resolve({ errors: response.getTransactionResponse().getErrors() });
                         // console.log('Error Code: ' + response.getTransactionResponse().getErrors().getError()[0].getErrorCode());
                         // console.log('Error message: ' + response.getTransactionResponse().getErrors().getError()[0].getErrorText());
                     } else {
@@ -125,7 +121,6 @@ export const createTransactionWithAccept = ({
             } else {
                 console.log('Null Response.');
             }
-
         });
     });
 };

@@ -33,7 +33,7 @@ export async function updatedFailedPayment({ data, paymentId }) {
             },
             paymentStatus: 'FAILED',
         };
-        return await updatePayment(paymentQuery, paymentUpdateData);  
+        return await updatePayment(paymentQuery, paymentUpdateData);
     } catch (err) {
         return Promise.reject(err);
     }

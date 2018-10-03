@@ -3,13 +3,9 @@ import {
     get,
     isEmpty,
 } from 'lodash';
-import {
-    baseHandlerWithOptions,
-} from '../../../private/base-handler';
+import { baseHandlerWithOptions  } from '../../../private/base-handler';
 import CustomError from '../../../private/custom-error';
-import {
-    getCompanyConfigs,
-} from '../../service/referenceData/adaptor';
+import { getCompanyConfigs  } from '../../service/referenceData/adaptor';
 import {
     authorizeNetProvider,
     isAuthorizeActiveFlagText,
@@ -24,7 +20,7 @@ const mapAuthNetConfig = data => ({
 });
 
 const responseMapper = success => paymentId => ({
-    status: success ? 'PAYMENT_SUCCESS': 'PAYMENT_FAILED',
+    status: success ? 'PAYMENT_SUCCESS' : 'PAYMENT_FAILED',
     paymentId,
 });
 
@@ -59,7 +55,25 @@ async function authorizeNetHelper(options) {
     }
     await updateSuccessPayment({ data: authorizeNetRes, paymentId });
     return successRespMapper(paymentId);
-};
+}
+
+
+async function authorizeNetHelperWithoutCompanyId(options) {
+   const authNetConfig = options.data;
+    const payment = await createNewPayment({ data: options.data, vendor: authorizeNetProvider });
+    const authorizeNetRes = await createTransactionWithAccept({
+        reqBody: options.data,
+        paymentInfo: payment,
+        config: mapAuthNetConfig(authNetConfig),
+    });
+    const paymentId = get(payment, '_id');
+    if (authorizeNetRes.errors) {
+        await updatedFailedPayment({ data: authorizeNetRes, paymentId });
+        return failedRespMapper(paymentId);
+    }
+    await updateSuccessPayment({ data: authorizeNetRes, paymentId });
+    return successRespMapper(paymentId);
+}
 
 
 const authorizeNetBase = baseHandlerWithOptions(authorizeNetHelper);
@@ -68,6 +82,4 @@ export async function authorizeNetHandler(options) {
     return authorizeNetBase(options);
 }
 
-export default {
-    authorizeNetHandler,
-};
+export default { authorizeNetHelperWithoutCompanyId, authorizeNetHandler };
