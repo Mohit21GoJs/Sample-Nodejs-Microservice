@@ -58,7 +58,7 @@ async function authorizeNetHelper(options) {
 }
 
 
-async function authorizeNetHelperWithoutCompanyId(options) {
+export async function authorizeNetHelperWithoutCompanyId(options) {
    const authNetConfig = options.data;
     const payment = await createNewPayment({ data: options.data, vendor: authorizeNetProvider });
     const authorizeNetRes = await createTransactionWithAccept({
