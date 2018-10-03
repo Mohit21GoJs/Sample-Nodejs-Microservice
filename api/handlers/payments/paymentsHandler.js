@@ -67,12 +67,13 @@ export async function authorizeNetHelperWithoutCompanyId(options) {
         config: mapAuthNetConfig(authNetConfig),
     });
     const paymentId = get(payment, '_id');
+    const transactionId = get(payment, 'transactionId');
     if (authorizeNetRes.errors) {
         await updatedFailedPayment({ data: authorizeNetRes, paymentId });
         return failedRespMapper(paymentId);
     }
     await updateSuccessPayment({ data: authorizeNetRes, paymentId });
-    return successRespMapper(paymentId);
+    return successRespMapper(transactionId);
 }
 
 
