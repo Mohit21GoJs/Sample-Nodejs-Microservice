@@ -19,9 +19,11 @@ const mapAuthNetConfig = data => ({
     transactionKey: get(data, 'properties.transactionKey'),
 });
 
-const responseMapper = success => paymentId => ({
+const responseMapper = success => (paymentId, amountPaid, createdOn) => ({
     status: success ? 'PAYMENT_SUCCESS' : 'PAYMENT_FAILED',
     paymentId,
+    amountPaid,
+    createdOn
 });
 
 const successRespMapper = responseMapper(true);
@@ -48,13 +50,16 @@ async function authorizeNetHelper(options) {
         paymentInfo: payment,
         config: mapAuthNetConfig(authNetConfig),
     });
+    // @TODO: move to mappers
     const paymentId = get(payment, '_id');
+    const amountPaid = get(payment, 'amountPaid');
+    const createdOn = get(payment, 'createdOn');
     if (authorizeNetRes.errors) {
         await updatedFailedPayment({ data: authorizeNetRes, paymentId });
         return failedRespMapper(paymentId);
     }
     await updateSuccessPayment({ data: authorizeNetRes, paymentId });
-    return successRespMapper(paymentId);
+    return successRespMapper(paymentId, amountPaid, createdOn);
 }
 
 
