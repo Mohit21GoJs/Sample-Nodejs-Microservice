@@ -22,6 +22,34 @@ tags:
   description: All Payments Endpoints
 paths:
   #--------------------------------------------------------Payments----------------------------------------------#
+  /payments/paypal:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: paypalController
+    post:
+      tags:
+        - Payments
+      description: Save payments from authorize.net provider
+      # used as the method name of the controller
+      operationId: makePaymentIframe
+      parameters: 
+        - $ref: '#/parameters/Authorization'
+        - name: data
+          in: body
+          description: request body from paypal
+          required: true
+          schema:
+            $ref: '#/definitions/PaypalReqBody'
+      responses:
+        "200":
+          description: Success
+        # responses may fall through to errors
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /payments/authorizenet:
     # binds a127 app logic to a route
     x-swagger-router-controller: authorizeNetController
@@ -98,7 +126,6 @@ paths:
           description: Success
         # responses may fall through to errors
           schema:
-            type : array
             # a pointer to a definition
             $ref: "#/definitions/PaymentResponse"
         default:
@@ -146,6 +173,39 @@ definitions:
       addressType: 
         type: "boolean"
         example: false
+  PaypalReqBody:
+    properties:
+      payload:
+        type: object
+      amount:
+        type: number
+        example: 23.99
+      currency:
+        type: string
+        example: USD
+      paymentTerms:
+        type: string
+        example: 'current'
+      paymentMethod:
+        type: string
+        example: 'CC'
+      paymentReceiver:
+        properties:
+          id: 
+            type: string
+            example: '0XIO12903'
+          name: 
+            type: string
+            example: 'John Doe'
+      payer:
+        properties:
+          id: 
+            type: string
+            example: '909320'
+          name:
+            type: string
+            example: 'Jane Doe'
+      
   AcceptMethodRequestBody:
     properties: 
       amount:
@@ -221,7 +281,7 @@ definitions:
           name: 
             type: "string"
             example: "test_name"
-      payer: 
+      paypalData: 
         properties: 
           id: 
             type: "string"

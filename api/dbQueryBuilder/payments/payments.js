@@ -56,6 +56,29 @@ export async function updateSuccessPayment({ data, paymentId }) {
     }
 }
 
+export async function saveNewPayment({ data, vendor }) {
+    try {
+        const paymentData = {
+            vendorResponse: {
+                success: get(data, 'paypalData'),
+            },
+            paymentTerms: get(data, 'paymentTerms'),
+            paymentMethod: get(data, 'paymentMethod'),
+            paymentStatus: 'SAVED',
+            vendor,
+            createdOn: Date.now(),
+            transactionId: uniqId(),
+            receivedBy: get(data, 'paymentReceiver'),
+            payer: get(data, 'payer'),
+            amountPaid: get(data, 'amount'),
+            currency: get(data, 'currency'),
+        };
+        return await createPayment(paymentData);
+    } catch (err) {
+        return Promise.reject(err);
+    }
+}
+
 export default {
     createNewPayment,
 };
