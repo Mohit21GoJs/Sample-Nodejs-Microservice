@@ -31,11 +31,13 @@ const authorizeNetEnv = undefined;
 const referenceDataService = undefined;
 const authorizeNetProvider = undefined;
 const isAuthorizeActiveFlagText = 'Active'; // Move to configs
+const paypalProvider = 'paypal';
 
 export {
   authorizeNetEnv,
   referenceDataService,
   authorizeNetProvider,
+  paypalProvider,
   isAuthorizeActiveFlagText,
   transporterUserName,
   transporterServiceName,

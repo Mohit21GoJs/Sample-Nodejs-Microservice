@@ -9,8 +9,9 @@ import { getCompanyConfigs  } from '../../service/referenceData/adaptor';
 import {
     authorizeNetProvider,
     isAuthorizeActiveFlagText,
+    paypalProvider,
 } from '../../vars/appSettings';
-import { createNewPayment, updatedFailedPayment, updateSuccessPayment } from '../../dbQueryBuilder/payments/payments';
+import { createNewPayment, updatedFailedPayment, updateSuccessPayment, saveNewPayment } from '../../dbQueryBuilder/payments/payments';
 import { createTransactionWithAccept } from '../../service/authorizenet/adaptor';
 
 
@@ -62,6 +63,15 @@ async function authorizeNetHelper(options) {
     return successRespMapper(paymentId, requestedAmount, createdOn);
 }
 
+async function paypalHelper(options) {
+    const payment = await saveNewPayment({ data: options.data, vendor: paypalProvider });
+    // @TODO: move to mappers
+    const paymentId = get(payment, '_id');
+    const requestedAmount = get(payment, 'amountPaid');
+    const createdOn = get(payment, 'createdOn');
+    return successRespMapper(paymentId, requestedAmount, createdOn);
+}
+
 
 export async function authorizeNetHelperWithoutCompanyId(options) {
    const authNetConfig = options.data;
@@ -81,11 +91,16 @@ export async function authorizeNetHelperWithoutCompanyId(options) {
     return successRespMapper(transactionId);
 }
 
-
 const authorizeNetBase = baseHandlerWithOptions(authorizeNetHelper);
 
 export async function authorizeNetHandler(options) {
     return authorizeNetBase(options);
+}
+
+const paypalIframeBase = baseHandlerWithOptions(paypalHelper);
+
+export async function paypalIframeHandler(options) {
+    return paypalIframeBase(options);
 }
 
 export default { authorizeNetHelperWithoutCompanyId, authorizeNetHandler };
