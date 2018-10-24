@@ -178,8 +178,8 @@ const createServer = (options, cb) => {
       logStreams: [{
         type: 'rotating-file',
         path: options.logFilePath,
-        period: '1h', // daily rotation
-        count: 2, // keep 2 back copies
+        period: '2h', // daily rotation
+        count: 72, // keep 72 back copies
       }],
       logSrc: false,
       offset: getOffset(),
