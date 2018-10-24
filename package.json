@@ -1,6 +1,6 @@
 {
   "name": "aob-payments-service",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "private": true,
   "description": "Payments details",
   "keywords": [],
