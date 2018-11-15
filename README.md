@@ -1,5 +1,17 @@
 ## Sample Node.js Service ##
 
+Basic Philosophy: 
+* Write one function for a task.
+* Use if/else as less as we can, prefer to use schema validation instead.
+* Use mappers and entities for DRY Approach(as explained later)
+* Use external config as per 12-factor rule to make service deployable anywhere.
+* Containerize the app using Docker so it can run on any os independently.
+* Global Try/catch in controllers/handlers to avoid redundant and better control of error handling.
+* Use streams for processing big data, for example in case of image upload etc.
+
+## ToDo ##
+* Unit tests for each and every functions
+* Code Coverage
 
 ### Tools ###
 * gulpfile.js: Gulp Task runner for running tasks like setting up environment variable, start nodemon with babel node.
