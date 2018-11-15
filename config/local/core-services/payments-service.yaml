@@ -1,5 +1,5 @@
 dbConfigs: 
-    dbName: 'supplier_production'
+    dbName: 'prod'
 
 authorizeNetProvider: 'Authorize.net'
 
